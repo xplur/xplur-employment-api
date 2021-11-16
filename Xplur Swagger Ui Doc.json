@@ -19,7 +19,7 @@
           }
         ],
         "requestBody": {
-          "description": "Upload Your File [.pdf \".doc .docx]",
+          "description": "Upload Your File .pdf".doc .docx",
           "required": true,
           "content": {
             "multipart/form-data": {
@@ -447,7 +447,7 @@
           },
           "detail": {
             "type": "string",
-            "example": "Input Parameter Format Miss Match Kendly Check Examples"
+            "example": "Input Parameter Format Mismatch Kindly Check Example"
           },
           "code": {
             "type": "integer",
