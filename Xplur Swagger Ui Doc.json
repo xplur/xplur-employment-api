@@ -19,7 +19,7 @@
           }
         ],
         "requestBody": {
-          "description": "Upload Your File .pdf".doc .docx",
+          "description": "Upload Your File .pdf .doc .docx",
           "required": true,
           "content": {
             "multipart/form-data": {
