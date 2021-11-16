@@ -135,16 +135,6 @@
               }
             }
           },
-          "421": {
-            "description": "too may request at time",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Unsupported"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -341,7 +331,7 @@
           },
           "message": {
             "type": "string",
-            "example": "You are under processing"
+            "example": "Service Under Processing"
           },
           "refrence_id": {
             "type": "string",
