@@ -1,0 +1,567 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Xplur Education Tech",
+    "description": "Xplur Platform Education Tech APIs",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.xplur.com.au/scores/v1/"
+    }
+  ],
+  "paths": {
+    "/scores/v1/": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Upload Your File [.pdf \".doc .docx]",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "All The Parameters Are Mandatory",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "PassportNumber",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "pa0123456789"
+            }
+          },
+          {
+            "in": "header",
+            "name": "First Name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "ABC"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Last Name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "XYZ"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Organization Name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "xyz.LLP"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User_input"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invaid Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/Invaid_Response1"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Input_Response0"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Invaid_Response"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acces Deined",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acces_Deined"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported File Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unsupported"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/server"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scores/v1/results": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "fatch desire data",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "refrenceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User_profile_DB"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invaid Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/Invaid_Response1"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Input_Response0"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Invaid_Response"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acces Deined",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acces_Deined"
+                }
+              }
+            }
+          },
+          "421": {
+            "description": "too may request at time",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/toomany"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/server"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User_profile_DB": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 46
+          },
+          "name": {
+            "type": "string",
+            "example": "kumar"
+          },
+          "university_id": {
+            "type": "integer",
+            "example": "un0123456789"
+          },
+          "passport_id": {
+            "type": "string",
+            "example": "pa0123456789"
+          },
+          "street1": {
+            "type": "string",
+            "example": "LOT 123 David Street"
+          },
+          "city": {
+            "type": "string",
+            "example": "Sydney"
+          },
+          "state": {
+            "type": "string",
+            "example": "NSW"
+          },
+          "zip": {
+            "type": "integer",
+            "example": 2000
+          },
+          "country": {
+            "type": "string",
+            "example": "Au"
+          },
+          "resource_engagement_score": {
+            "type": "integer",
+            "example": 6
+          },
+          "resource_engagement_grade": {
+            "type": "string",
+            "example": "Medium"
+          },
+          "resource_bgv_score": {
+            "type": "integer",
+            "example": 7
+          },
+          "resource_bgv_grade": {
+            "type": "string",
+            "example": "Amber"
+          },
+          "resource_employability_index": {
+            "type": "integer",
+            "example": 6
+          },
+          "resource_employability_grade": {
+            "type": "string",
+            "example": "SemiSkilled"
+          },
+          "updated_date": {
+            "type": "integer",
+            "example": "2020-08-22T09:11:43.679"
+          },
+          "requested_date": {
+            "type": "string",
+            "example": "2020-08-22T09:11:43.679"
+          },
+          "status": {
+            "type": "integer",
+            "example": 200
+          },
+          "clientId": {
+            "type": "string",
+            "example": "abc"
+          },
+          "userId": {
+            "type": "string",
+            "example": "xyz@abc.com.au"
+          }
+        }
+      },
+      "User_input": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 202
+          },
+          "message": {
+            "type": "string",
+            "example": "Service Under Processing"
+          },
+          "refrence_id": {
+            "type": "string",
+            "example": "un0123456789ref"
+          }
+        }
+      },
+      "UnauthorizedError": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 401
+          },
+          "error": {
+            "type": "string",
+            "example": "You Are Not Subscribe"
+          },
+          "message": {
+            "type": "string",
+            "example": "Kindly Check Your Subscription"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Contect To Admin"
+          },
+          "code": {
+            "type": "integer",
+            "example": 401
+          }
+        }
+      },
+      "Unsupported": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 415
+          },
+          "error": {
+            "type": "string",
+            "example": "Unsupported file type"
+          },
+          "message": {
+            "type": "string",
+            "example": "File format [.doc .docx .pdf]"
+          },
+          "detail": {
+            "type": "string",
+            "example": "server refuses to accept the request"
+          },
+          "code": {
+            "type": "integer",
+            "example": 415
+          }
+        }
+      },
+      "Invaid_Response": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          },
+          "error": {
+            "type": "string",
+            "example": "Size Of Input Parameter Exceeds"
+          },
+          "message": {
+            "type": "string",
+            "example": "Upload Size Exceeds"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Upload Size Must Be Less 5 KB"
+          },
+          "code": {
+            "type": "integer",
+            "example": 1001
+          }
+        }
+      },
+      "Invaid_Response1": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          },
+          "error": {
+            "type": "string",
+            "example": "Input Parameter Fromat"
+          },
+          "message": {
+            "type": "string",
+            "example": "Invaid Formate"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Input Parameter Format Miss Match Kendly Check Examples"
+          },
+          "code": {
+            "type": "integer",
+            "example": 1003
+          }
+        }
+      },
+      "Input_Response0": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          },
+          "error": {
+            "type": "string",
+            "example": "Input Parameter Fromat"
+          },
+          "message": {
+            "type": "string",
+            "example": "Invaid Formate"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Input Parameter Format Miss Match Kendly Check Examples"
+          },
+          "code": {
+            "type": "integer",
+            "example": 1000
+          }
+        }
+      },
+      "server": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 500
+          },
+          "message": {
+            "type": "string",
+            "example": "Server Problem"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Internal Server Issue"
+          }
+        }
+      },
+      "Acces_Deined": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 403
+          },
+          "message": {
+            "type": "string",
+            "example": "Invaid Token"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Your JWT Token Is Invalid"
+          },
+          "code": {
+            "type": "integer",
+            "example": 403
+          }
+        }
+      },
+      "toomany": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2019-09-16T22:14:45.624+0000"
+          },
+          "status": {
+            "type": "integer",
+            "example": 421
+          },
+          "message": {
+            "type": "string",
+            "example": "XPL-Result-Next-Call:5000"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Please Wait Your Next Call After five Seconds"
+          },
+          "code": {
+            "type": "integer",
+            "example": 421
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
